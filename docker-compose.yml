@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+
+  product-db:
+    image: mysql:5.7
+    platform: linux/amd64
+    restart: always
+    environment:
+      MYSQL_DATABASE: product
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - .dbdata:/var/lib/mysql
+      # - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+    ports:
+      - 33080:3306
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "8m"
+        max-file: "10"
