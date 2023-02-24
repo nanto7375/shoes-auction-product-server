@@ -72,7 +72,7 @@ const ProductFactory = ( sequelize : Sequelize ): ProductStatic => {
     },
     status: {
       comment: '상품 상태',
-      type: DataTypes.ENUM('SELLING','WAITING','SOLD','FAILED'),
+      type: DataTypes.ENUM( 'SELLING','WAITING','SOLD','FAILED' ),
       defaultValue: 'SELLING',
     },
     image: {
@@ -82,11 +82,7 @@ const ProductFactory = ( sequelize : Sequelize ): ProductStatic => {
     info: {
       comment: '상품 상세',
       type: DataTypes.JSON,
-      validate: {
-        schema: schemaValidator({
-          type: 'object',
-        }),
-      },
+      validate: { schema: schemaValidator({ type: 'object' }) },
       defaultValue: {},
       get() {
         const originInfo = this.getDataValue( 'info' );

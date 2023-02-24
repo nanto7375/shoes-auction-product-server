@@ -31,12 +31,12 @@ const db = {
 };
 
 // product <-> auction
-db.Product.hasMany( db.Auction, { sourceKey: 'uuid', foreignKey: 'productUuid',  onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-db.Auction.belongsTo( db.Product, { targetKey: 'uuid', foreignKey: 'prodcutUuid' });
+db.Product.hasMany( db.Auction, { sourceKey: 'uuid', foreignKey: 'product_uuid',  onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+db.Auction.belongsTo( db.Product, { targetKey: 'uuid', foreignKey: 'prodcut_uuid' });
 
 // product <-> like
-db.Product.hasMany( db.Like, { sourceKey: 'uuid', foreignKey: 'productUuid',  onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-db.Like.belongsTo( db.Product, { targetKey: 'uuid', foreignKey: 'prodcutUuid' });
+db.Product.hasMany( db.Like, { sourceKey: 'uuid', foreignKey: 'product_uuid',  onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+db.Like.belongsTo( db.Product, { targetKey: 'uuid', foreignKey: 'prodcut_uuid' });
 
 // sequelize
 export const checkDbConnection = async () => {
