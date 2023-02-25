@@ -45,7 +45,7 @@ export const checkDbConnection = async () => {
     
     await db.sequelize.authenticate();
     if ( env === 'DEV' ) {
-      await db.sequelize.sync({ force: true, alter: true });
+      // await db.sequelize.sync({ force: true, alter: true });
     }
 
     logger.info({ dbMsg: '[DB]Connection has been established successfully.' });

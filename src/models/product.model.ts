@@ -44,12 +44,6 @@ const ProductFactory = ( sequelize : Sequelize ): ProductStatic => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    productId: {
-      type: DataTypes.STRING, 
-      unique: true, 
-      comment: '상품 id',
-      notNull: true,
-    },
     brand: {
       comment: '브랜드명',
       type: DataTypes.STRING,
