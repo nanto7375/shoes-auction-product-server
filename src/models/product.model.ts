@@ -11,11 +11,10 @@ const schemaValidator = function ( schema ) {
 class Product extends Model {
   public id!: number;
   public uuid!: string;
-  public productId!: string;
   public brand!: string;
   public name!: string;
   public price!: number;
-  public user_uuid!: string;
+  public userUuid!: string;
   public status!: 'SELLING'|'WAITING'|'SOLD'|'FAILED';
   public image!: string;
   public info!: Record<string, any>;

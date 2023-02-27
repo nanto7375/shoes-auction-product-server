@@ -9,9 +9,10 @@ export const create = async ({ productUuid, userUuid, bidPrice }) => {
 };
 
 export const findTopPriceOne = async ( productUuid ) => {
-  const auction = await Auction.findOne({ where: { productUuid }, order: [ 'bidPrice', 'desc' ], limit: 1 });
+  console.log( 0 );
+  const auction = await Auction.findAll({ where: { productUuid }, order: [ [ 'bidPrice', 'DESC' ] ], limit: 1 });
 
-  return auction;
+  return auction[0];
 };
 
 // export const findOneByWhere = async ( where ) => {
