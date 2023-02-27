@@ -1,9 +1,9 @@
 import { ProductRepository } from "../repositories";
 
-export const getProducts = async () => {
-  const products = await ProductRepository.findAll();
+export const getProductsAndCount = async ({ page, brand, active }) => {
+  const { count, products } = await ProductRepository.getProductsAndCount({ page, brand, active });
 
-  return products;
+  return { count, products };
 };
 
 
