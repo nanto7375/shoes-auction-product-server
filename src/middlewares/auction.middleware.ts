@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { badData, badRequest } from "../exceptions/definition.exception";
 import ErrorException from "../exceptions/form.exception";
-import { AuctionService } from "../services";
+import { AuctionService, ProductService } from "../services";
 
 export const checkAuctionPost = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {
   const { useruuid: userUuid } = headers;
@@ -12,8 +12,15 @@ export const checkAuctionPost = async ({ body, headers }: Request, res: Response
       throw new ErrorException( badData );
     }
 
+    const product = await ProductService.findOneByUuid( productUuid );
     const topPriceAuction = await AuctionService.getTopPriceAuction( productUuid );
   
+    if ( !product ) {
+      throw new ErrorException( badData );
+    }
+    if ( bidPrice <= product.price ) {
+      throw new ErrorException( badRequest );
+    }
     if ( topPriceAuction && ( bidPrice <= topPriceAuction.bidPrice ) ) {
       throw new ErrorException( badRequest );
     }

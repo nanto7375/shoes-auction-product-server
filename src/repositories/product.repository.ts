@@ -2,9 +2,10 @@ import db from "../models";
 
 const { Product, Op } = db;
 
-export const findAll = async () => {
-  const products = await Product.findAll();
-  return products;
+export const findOneByUuid = async ( uuid ) => {
+  const product = await Product.findOne({ where: { uuid } });
+
+  return product;
 };
 
 export const getProductsAndCount = async ({ page, brand, active }) => {

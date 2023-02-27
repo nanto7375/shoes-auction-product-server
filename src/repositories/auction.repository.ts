@@ -9,7 +9,6 @@ export const create = async ({ productUuid, userUuid, bidPrice }) => {
 };
 
 export const findTopPriceOne = async ( productUuid ) => {
-  console.log( 0 );
   const auction = await Auction.findAll({ where: { productUuid }, order: [ [ 'bidPrice', 'DESC' ] ], limit: 1 });
 
   return auction[0];
