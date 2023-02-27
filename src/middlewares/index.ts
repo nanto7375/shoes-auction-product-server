@@ -1,3 +1,3 @@
-import * as likeMw from './like.middleware';
+import * as auctionMw from './auction.middleware';
 
-export { likeMw };
+export { auctionMw };

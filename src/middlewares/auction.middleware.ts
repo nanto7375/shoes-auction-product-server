@@ -3,8 +3,10 @@ import { badData, badRequest } from "../exceptions/definition.exception";
 import ErrorException from "../exceptions/form.exception";
 import { AuctionService } from "../services";
 
-export const checkAuctionPost = async ({ body }: Request, res: Response, next: NextFunction ) => {
-  const { productUuid, userUuid, bidPrice } = body;
+export const checkAuctionPost = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {
+  const { useruuid: userUuid } = headers;
+  const { productUuid, bidPrice } = body;
+
   try {
     if ( !productUuid || !userUuid || !bidPrice ) {
       throw new ErrorException( badData );
