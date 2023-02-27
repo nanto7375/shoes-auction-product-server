@@ -1,9 +1,15 @@
 import { AuctionRepository } from "../repositories";
 
-export const getAuctions = async () => {
-  const auctions = await AuctionRepository.findAll();
+export const getTopPriceAuction = async ( productUuid ) => {
+  const auction = await AuctionRepository.findTopPriceOne( productUuid );
 
-  return auctions;
+  return auction;
+};
+
+export const doAuction = async ({ productUuid, userUuid, bidPrice }) => {
+  const result = await AuctionRepository.create({ productUuid, userUuid, bidPrice });
+  
+  return result;
 };
 
 
