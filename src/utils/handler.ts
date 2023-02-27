@@ -8,7 +8,7 @@ export const resSuccess = ( res: Response, resultMessage: any ) => {
 
 export const resError = ( res: Response, error: any ) => {
   const status = error?.status ||  500;
-  const resultCode = error?.resultCode || 19999;
+  const resultCode = error?.resultCode || 29999;
   const resultMessage = error?.resultMessage || "undefined error";
   logger.error({ stack: error.stack });
   logger.error({ status, resultCode, resultMessage });
