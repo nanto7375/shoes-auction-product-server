@@ -17,11 +17,4 @@ router.post( '/auction', checkAuctionPost, responseWrapper( async ( req: Request
   resSuccess( res, { result });
 }) );
 
-router.get( '/auctions', responseWrapper( async ( req: Request, res: Response ) => {
-
-  console.log( "auctions test" );
-  
-  resSuccess( res, {});
-}) );
-
 export default router;

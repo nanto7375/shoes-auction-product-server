@@ -13,15 +13,3 @@ export const findTopPriceOne = async ( productUuid ) => {
   
   return auction;
 };
-
-// export const findOneByWhere = async ( where ) => {
-//   const query = {};
-//   Object.keys( where ).forEach( key => {
-//     if ( where[key]) {
-//       query[key] = where[key];
-//     }
-//   });
-//   const auction = await Auction.findOne({ where: query });
-
-//   return auction;
-// };

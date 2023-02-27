@@ -12,8 +12,10 @@ export const checkAuctionPost = async ({ body, headers }: Request, res: Response
       throw new ErrorException( badData );
     }
 
-    const product = await ProductService.findOneByUuid( productUuid );
-    const topPriceAuction = await AuctionService.getTopPriceAuction( productUuid );
+    const [ product, topPriceAuction ] = await Promise.all([ 
+      ProductService.findOneByUuid( productUuid ), 
+      AuctionService.getTopPriceAuction( productUuid ), 
+    ]);
   
     if ( !product ) {
       throw new ErrorException( badData );
