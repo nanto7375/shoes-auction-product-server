@@ -2,7 +2,7 @@ import db from "../models";
 
 const { Product, Op } = db;
 
-export const findOneByUuid = async ( uuid ) => {
+export const findByUuid = async ( uuid ) => {
   const product = await Product.findOne({ where: { uuid } });
 
   return product;

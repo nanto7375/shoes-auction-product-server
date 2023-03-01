@@ -1,7 +1,7 @@
 import { ProductRepository } from "../repositories";
 
-export const findOneByUuid = async( uuid ) => {
-  const product = await ProductRepository.findOneByUuid( uuid );
+export const findByUuid = async( uuid ) => {
+  const product = await ProductRepository.findByUuid( uuid );
   
   return product;
 };
