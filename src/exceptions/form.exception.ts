@@ -5,11 +5,11 @@ class ErrorException extends Error {
   resultCode: number;
   resultMessage: string;
 
-  constructor({ status, resultCode, resultMessage }: ExceptionAttribute ) {
-    super( resultMessage );
+  constructor({ status, resultCode, resultMessage }: ExceptionAttribute, customMessage=null ) {
+    super( customMessage || resultMessage );
     this.status = status;
     this.resultCode = resultCode;
-    this.resultMessage = resultMessage;
+    this.resultMessage = customMessage || resultMessage;
   }
 }
 

@@ -19,16 +19,16 @@ router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Requ
   ]);
 
   if ( !product ) {
-    throw new ErrorException( badData );
+    throw new ErrorException( badData, `product doesn't exist which matches uuid` );
   }
   if ( userUuid === product.userUuid ) {
-    throw new ErrorException( badRequest );
+    throw new ErrorException( badRequest, `seller can't roup to his` );
   }
   if ( bidPrice <= product.price ) {
-    throw new ErrorException( badRequest );
+    throw new ErrorException( badRequest, `bidPrice should be larger than product price` );
   }
   if ( topPriceAuction && ( bidPrice <= topPriceAuction.bidPrice ) ) {
-    throw new ErrorException( badRequest );
+    throw new ErrorException( badRequest, `bidPrice should be larger than topAuctionPrice` );
   }
 
   const result = await AuctionService.doAuction({ productUuid, userUuid, bidPrice });
