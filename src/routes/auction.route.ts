@@ -3,11 +3,11 @@ import { Router, Request, Response } from 'express';
 import ErrorException from '../exceptions/form.exception';
 import { badData, badRequest } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
-import { auctionMw } from '../middlewares';
+import { AuctionMiddleware } from '../middlewares';
 import { AuctionService, ProductService } from '../services';
 
 const router = Router();
-const { checkReqAuctionPost } = auctionMw;
+const { checkReqAuctionPost } = AuctionMiddleware;
 
 router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Request, res: Response ) => {
   const { useruuid: userUuid } = req.headers;

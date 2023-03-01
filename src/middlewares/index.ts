@@ -1,4 +1,4 @@
-import * as auctionMw from './auction.middleware';
-import * as productMw from './product.middleware';
+import * as AuctionMiddleware from './auction.middleware';
+import * as productMiddleware from './product.middleware';
 
-export { auctionMw, productMw };
+export { AuctionMiddleware, productMiddleware };

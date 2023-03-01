@@ -4,10 +4,10 @@ import ErrorException from '../exceptions/form.exception';
 import { badData, badRequest } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
 import { ProductService } from '../services';
-import { productMw } from '../middlewares';
+import { productMiddleware } from '../middlewares';
 
 const router = Router();
-const { checkBrand } = productMw;
+const { validateBrand } = productMiddleware;
 
 /**
  * query {
@@ -16,7 +16,7 @@ const { checkBrand } = productMw;
  *  active?: 'true' | 'false';
  * }
  */
-router.get( '/products', checkBrand, responseWrapper( async ( req: Request, res: Response ) => {
+router.get( '/products', validateBrand, responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
   
   const { count, products } = await ProductService.getProductsAndCount({ 

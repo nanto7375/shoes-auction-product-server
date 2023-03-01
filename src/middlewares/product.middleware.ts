@@ -9,7 +9,7 @@ const SHOES_BRAND = {
   handmade: 1,
 };
 
-export const checkBrand = ( req: Request, res: Response, next: NextFunction ) => {
+export const validateBrand = ( req: Request, res: Response, next: NextFunction ) => {
   const brand = req.query?.brand;
 
   try {

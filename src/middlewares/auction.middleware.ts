@@ -8,7 +8,7 @@ export const checkReqAuctionPost = async ({ body, headers }: Request, res: Respo
 
   try {
     if ( !productUuid || !userUuid || !bidPrice ) {
-      throw new ErrorException( badData, `request body error` );
+      throw new ErrorException( badData, `auction post request body error` );
     }
     
     next();
