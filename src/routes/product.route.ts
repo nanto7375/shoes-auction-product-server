@@ -10,7 +10,11 @@ const router = Router();
 const { checkBrand } = productMw;
 
 /**
- * query - page: number, brand: null | 'nike' | 'adidas' | 'handmade', active: 'true' | 'false'
+ * query {
+ *  page: number; 
+ *  brand: null | 'nike' | 'adidas' | 'newbalance' | 'handmade'; 
+ *  active: 'true' | 'false';
+ * }
  */
 router.get( '/products', checkBrand, responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
