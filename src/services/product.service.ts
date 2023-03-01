@@ -11,5 +11,3 @@ export const getProductsAndCount = async ({ page, brand, active }) => {
 
   return { count, products };
 };
-
-
