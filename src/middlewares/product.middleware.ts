@@ -9,8 +9,8 @@ const SHOES_BRAND = {
   handmade: 1,
 };
 
-export const checkBrand = ({ query }: Request, res: Response, next: NextFunction ) => {
-  const { brand } = query;
+export const checkBrand = ( req: Request, res: Response, next: NextFunction ) => {
+  const brand = req.query?.brand;
 
   try {
     if ( brand && !SHOES_BRAND[brand as string]) {
