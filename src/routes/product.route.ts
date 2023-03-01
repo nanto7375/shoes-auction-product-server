@@ -11,9 +11,9 @@ const { checkBrand } = productMw;
 
 /**
  * query {
- *  page: number; 
- *  brand: null | 'nike' | 'adidas' | 'newbalance' | 'handmade'; 
- *  active: 'true' | 'false';
+ *  page?: number; 
+ *  brand?: null | 'nike' | 'adidas' | 'newbalance' | 'handmade'; 
+ *  active?: 'true' | 'false';
  * }
  */
 router.get( '/products', checkBrand, responseWrapper( async ( req: Request, res: Response ) => {
