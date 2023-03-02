@@ -18,17 +18,18 @@ router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Requ
     AuctionService.getTopPriceAuction( productUuid ), 
   ]);
 
-  if ( !product ) {
+  
+  if ( !product ) { // uuid에 해당하는 product 있는지 체크
     throw new ErrorException( badData, `product doesn't exist which matches uuid` );
   }
-  if ( userUuid === product.userUuid ) {
+  if ( userUuid === product.userUuid ) {  // 자기 등록 상품인지 체크
     throw new ErrorException( badRequest, `seller can't roup to his` );
   }
-  if ( bidPrice <= product.price ) {
-    throw new ErrorException( badRequest, `bidPrice should be larger than product price` );
-  }
-  if ( topPriceAuction && ( bidPrice <= topPriceAuction.bidPrice ) ) {
+  if ( topPriceAuction && ( bidPrice <= topPriceAuction.bidPrice ) ) {  // 현재 입찰가가 최고입찰가보다 높은지 체크
     throw new ErrorException( badRequest, `bidPrice should be larger than topAuctionPrice` );
+  }
+  if ( !topPriceAuction && bidPrice <= product.price ) {  // 입찰가가 상품 등록가보다 높은지 체크(최초 입찰 시 필요)
+    throw new ErrorException( badRequest, `bidPrice should be larger than product price` );
   }
 
   const result = await AuctionService.doAuction({ productUuid, userUuid, bidPrice });
