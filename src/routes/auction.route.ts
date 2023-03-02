@@ -26,7 +26,7 @@ router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Requ
     throw new ErrorException( badRequest, `seller can't roup to his` );
   }
   if ( topPriceAuction && ( bidPrice <= topPriceAuction.bidPrice ) ) {  // 현재 입찰가가 최고입찰가보다 높은지 체크
-    throw new ErrorException( badRequest, `bidPrice should be larger than topAuctionPrice` );
+    throw new ErrorException( badRequest, `bidPrice should be larger than top auction price` );
   }
   if ( !topPriceAuction && bidPrice <= product.price ) {  // 입찰가가 상품 등록가보다 높은지 체크(최초 입찰 시 필요)
     throw new ErrorException( badRequest, `bidPrice should be larger than product price` );
