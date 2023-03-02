@@ -8,13 +8,6 @@ import { LikeService } from '../services';
 
 const router = Router();
 
-router.get( '/likes', responseWrapper( async ( req: Request, res: Response ) => {
-
-  console.log( "likes test" );
-  
-  resSuccess( res, {});
-}) );
-
 /**
  * @api {post} / like 좋아요 등록/해재
  * @param  {string} productUuid : 상품 uuid
