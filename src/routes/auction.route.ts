@@ -22,6 +22,9 @@ router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Requ
   if ( !product ) { // uuid에 해당하는 product 있는지 체크
     throw new ErrorException( badData, `product doesn't exist which matches uuid` );
   }
+  if ( new Date() > new Date( product.auctionEndDate ) ) { // 경매 마감 시간 체크
+    throw new ErrorException( badRequest, `auction close` );
+  }
   if ( userUuid === product.userUuid ) {  // 자기 등록 상품인지 체크
     throw new ErrorException( badRequest, `seller can't roup to his` );
   }
