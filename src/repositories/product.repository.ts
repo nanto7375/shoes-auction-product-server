@@ -25,7 +25,7 @@ export const createProduct = async ({ userUuid, name, brand, price, description,
 
 export const getProductAndAutions = async ( productUuid, userUuid ) => {
   const where = { uuid: productUuid };
-
+  
   // 상품 조회 시, 해당 상품의 경매 정보를 조회
   // userUuid가 있을 경우, 해당 유저가 해당 상품에 좋아요를 눌렀는지 조회
   const product = await Product.findOne({
@@ -35,12 +35,6 @@ export const getProductAndAutions = async ( productUuid, userUuid ) => {
       { model: Like, as: 'likes', attributes: [ 'createdAt' ], where: { userUuid , productUuid }, required: false },
     ],
   });
-
-
-
-
-
-  console.log( "가나다라" );
 
   return product;
 };

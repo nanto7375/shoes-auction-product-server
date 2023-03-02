@@ -42,8 +42,6 @@ router.post( '/product', productMiddleware.checkProductPost, responseWrapper( as
   const { useruuid: userUuid } = req.headers;
   const { name, brand, price, description, image, auction_end_date, info } = req.body;
 
-  console.log( "product test", userUuid, name, brand, price, description, image, auction_end_date, info );
-
   const product = await ProductService.createProduct({ userUuid, name, brand, price, description, image, auction_end_date, info });
 
   resSuccess( res, { product });
@@ -58,8 +56,6 @@ router.get( '/product/:productUuid', responseWrapper( async ( req: Request, res:
   
   const { useruuid: userUuid } = req.headers;
   const { productUuid } = req.params;
-
-  console.log( "product test", userUuid, productUuid );
 
   const product = await ProductService.getProductAndAutions( productUuid, userUuid );
 
