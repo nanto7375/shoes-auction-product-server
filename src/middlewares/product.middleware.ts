@@ -32,6 +32,7 @@ export const checkProductPost = async ({ body, headers }: Request, res: Response
   body.brand as 'nike' | 'adidas' | 'handmade';
 
   try {
+    // ! userUuid 값 없는 경우는 unAuthorized 에러를 던지는 게 맞는 듯! (나도 뒤닂게 수정함ㅋ)
     if ( !name || !userUuid || !price || !description || !image || !auction_end_date ) {
       throw new ErrorException( badData );
     }
