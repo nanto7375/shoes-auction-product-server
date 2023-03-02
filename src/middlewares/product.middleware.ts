@@ -22,3 +22,31 @@ export const validateBrand = ( req: Request, res: Response, next: NextFunction )
     next( error );
   }
 };
+
+
+export const checkProductPost = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {
+  const { useruuid: userUuid } = headers;
+  const { name, brand, price, description, image, auction_end_date } = body;
+
+  console.log( userUuid ,body );
+  body.brand as 'nike' | 'adidas' | 'handmade';
+
+  try {
+    if ( !name || !userUuid || !price || !description || !image || !auction_end_date ) {
+      throw new ErrorException( badData );
+    }
+  
+    if ( price <= 0 ) {
+      throw new ErrorException( badData, 'price must be greater than 0' );
+    }
+    
+    if ( brand === '' ) {
+      body.brand = 'handmade';
+    }
+    
+    next();
+  } catch ( error ) {
+    next( error );
+  }
+};
+

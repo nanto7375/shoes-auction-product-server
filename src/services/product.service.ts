@@ -11,3 +11,16 @@ export const getProductsAndCount = async ({ page, brand, active }) => {
 
   return { count, products };
 };
+
+export const createProduct = async ({ userUuid, name, brand, price, description, image, auction_end_date, info }) => {
+  const product = await ProductRepository.createProduct({ userUuid, name, brand, price, description, image, auction_end_date, info });
+
+  return product;
+};
+
+export const getProductAndAutions = async( productUuid, userUuid ) => {
+  const product = await ProductRepository.getProductAndAutions( productUuid, userUuid );
+  
+  return product;
+};
+
