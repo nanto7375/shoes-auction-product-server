@@ -19,6 +19,7 @@ const { validateBrand } = productMiddleware;
 router.get( '/products', validateBrand, responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
   
+  // page default: 1, brand default: null, activie default: 'false'
   const { count, products } = await ProductService.getProductsAndCount({ 
     page: ( page ? +page : 1 ) || 1,
     brand, 
