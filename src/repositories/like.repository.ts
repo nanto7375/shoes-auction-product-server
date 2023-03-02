@@ -14,6 +14,6 @@ export const isLike = async ({ productUuid, userUuid }) => {
 
 export const doLike = async ({ productUuid, userUuid, isLike }) => {
   const options =  { productUuid, userUuid };
-  const dolike = isLike ? await Like.destroy({ where : options }) : await Like.create( options );
+  const dolike = isLike ? await Like.destroy({ where: options }) : await Like.create( options );
   return dolike === 1 ? false : true;
 };

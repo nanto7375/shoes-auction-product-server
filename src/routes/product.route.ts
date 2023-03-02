@@ -53,18 +53,15 @@ router.post( '/product', productMiddleware.checkProductPost, responseWrapper( as
  * @returns {Product} product : 상품
 */
 router.get( '/product/:productUuid', responseWrapper( async ( req: Request, res: Response ) => {
-  
   const { useruuid: userUuid } = req.headers;
   const { productUuid } = req.params;
 
+  // ! 매개변수 객체형이 좋을 듯ㅎㅎ
+  // ! 그리고 getProductAndAuctions의 리턴값이 product, auctions 두개가 아니라 auctions가 product에 포함된 형태이니까
+  // ! getProductIncludingAuctions 같은 게 어떨가 싶음ㅎㅎ
   const product = await ProductService.getProductAndAutions( productUuid, userUuid );
 
   resSuccess( res, { product });
 }) );
-
-
-
-
-
 
 export default router;
