@@ -9,16 +9,18 @@ const router = Router();
 const { validateBrand } = productMiddleware;
 
 /**
- * query {
- *  page?: number; 
- *  brand?: null | 'nike' | 'adidas' | 'newbalance' | 'handmade'; 
- *  active?: 'true' | 'false';
- * }
+ * @api 상품 목록 조회
+ * @query page?: number
+ * @query brand?: 'nike' | 'adidas' | 'newbalance' | 'handmade'
+ * @query active?: 'true' | 'false'
  */
 router.get( '/products', validateBrand, responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
   
-  // page default: 1, brand default: null, activie default: 'false'
+  /**
+   * parameter default value
+   * page: 1, brand: null, active: 'false' as string
+   */
   const { count, products } = await ProductService.getProductsAndCount({ 
     page: ( page ? +page : 1 ) || 1,
     brand, 

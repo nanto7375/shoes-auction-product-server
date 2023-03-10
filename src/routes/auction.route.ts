@@ -9,6 +9,12 @@ import { AuctionService, ProductService } from '../services';
 const router = Router();
 const { checkReqAuctionPost } = AuctionMiddleware;
 
+/**
+ * @api 상품 입찰하기
+ * @headers useruuid: string
+ * @body productUuid: string
+ * @body bidPrice: number
+ */
 router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Request, res: Response ) => {
   const { useruuid: userUuid } = req.headers;
   const { productUuid, bidPrice } = req.body;
