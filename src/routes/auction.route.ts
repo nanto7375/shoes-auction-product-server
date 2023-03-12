@@ -24,7 +24,6 @@ router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Requ
     AuctionService.getTopPriceAuction( productUuid ), 
   ]);
 
-  
   if ( !product ) { // uuid에 해당하는 product 있는지 체크
     throw new ErrorException( badData, `product doesn't exist which matches uuid` );
   }
