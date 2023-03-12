@@ -18,8 +18,8 @@ export const createProduct = async ({ userUuid, name, brand, price, description,
   return product;
 };
 
-export const getProductAndAutions = async( productUuid, userUuid ) => {
-  const product = await ProductRepository.getProductAndAutions( productUuid, userUuid );
+export const getProductIncludingAuctions = async( productUuid ) => {
+  const product = await ProductRepository.getProductIncludingAuctions( productUuid );
   
   return product;
 };

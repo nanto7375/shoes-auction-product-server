@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { badData } from "../exceptions/definition.exception";
+import { badData, unAuthorized } from "../exceptions/definition.exception";
 import ErrorException from '../exceptions/form.exception';
 
 const SHOES_BRAND = {
@@ -32,9 +32,12 @@ export const checkProductPost = async ({ body, headers }: Request, res: Response
   body.brand as 'nike' | 'adidas' | 'handmade';
 
   try {
+    if ( !userUuid ) {
+      throw new ErrorException( unAuthorized );
+    }
     // ! userUuid 값 없는 경우는 unAuthorized 에러를 던지는 게 맞는 듯! (나도 뒤닂게 수정함ㅋ)
     if ( !name || !userUuid || !price || !description || !image || !auction_end_date ) {
-      throw new ErrorException( badData );
+      throw new ErrorException( badData, 'product post request body error' );
     }
   
     if ( price <= 0 ) {

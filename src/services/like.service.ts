@@ -12,10 +12,23 @@ export const isLike = async ({ productUuid, userUuid }) => {
   return isLike;
 };
 
-export const doLike = async ({ productUuid, userUuid, isLike }) => {
-  const dolike = await LikeRepository.doLike({ productUuid, userUuid, isLike });
-  return dolike;
+export const doLike = async ({ productUuid, userUuid }) => {
+  const like = await LikeRepository.doLike({ productUuid, userUuid });
+  return like;
 };
+
+export const unDoLike = async ({ productUuid, userUuid }) => {
+  const like = await LikeRepository.unDoLike({ productUuid, userUuid });
+  return like;
+};
+
+export const getLikeByUserAndProductId = async ({ productUuid, userUuid }) => {
+  const like = await LikeRepository.getLikeByUserAndProductId({ productUuid, userUuid });
+  return like;
+};
+
+
+
 
 
 
