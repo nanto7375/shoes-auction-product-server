@@ -19,8 +19,8 @@ router.post( '/like', responseWrapper( async ( req: Request, res: Response ) => 
   const { productUuid, doLike } = req.body; // like를 받고, 여부에 따라 좋아요 등록/해재
 
   // 좋아요 여부확인
-  const isLike = await LikeService.isLike({ productUuid, userUuid });
-  console.log( 'isLike : ', isLike, 'doLike : ', doLike );
+  const isLike = await LikeService.getLikeByUserAndProductId({ productUuid, userUuid });
+
   if ( doLike && isLike || !doLike && !isLike ) {
     throw new ErrorException( badData, `like doesn't exist which matches` );
   }
