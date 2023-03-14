@@ -1,30 +1,26 @@
 import { Router, Request, Response } from 'express';
 // import { Joi, Segments, celebrate } from 'celebrate';
 import ErrorException from '../exceptions/form.exception';
-import { badData, badRequest } from '../exceptions/definition.exception';
+import { badData, badRequest, unAuthorized } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
 import { ProductService } from '../services';
 import { productMiddleware } from '../middlewares';
 const router = Router();
-const { validateBrand } = productMiddleware;
+const { validateBrand, checkGetProducts, checkGetProductsBidding } = productMiddleware;
 
 /**
  * @api 상품 목록 조회
- * @query page?: number
+ * @query page: number
  * @query brand?: 'nike' | 'adidas' | 'newbalance' | 'handmade'
- * @query active?: 'true' | 'false'
+ * @query active: 'true' | 'false'
  */
-router.get( '/products', validateBrand, responseWrapper( async ( req: Request, res: Response ) => {
+router.get( '/products', [ validateBrand, checkGetProducts ], responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
   
-  /**
-   * parameter default value
-   * page: 1, brand: null, active: 'false' as string
-   */
   const { count, products } = await ProductService.getProductsAndCount({ 
-    page: ( page ? +page : 1 ) || 1,
+    page: +page,
     brand, 
-    active: JSON.parse( active as string || 'false' ), 
+    active: JSON.parse( active as string ), 
   });
   
   resSuccess( res, { count, products });
@@ -60,6 +56,22 @@ router.get( '/product/:productUuid', responseWrapper( async ( req: Request, res:
   const product = await ProductService.getProductIncludingAuctions( productUuid );
 
   resSuccess( res, { product });
+}) );
+
+/**
+ * @api 구매입찰현황
+ * @query page: number 
+ * @query status?: 'SELLING'|'WAITING'|'SOLD'|'FAILED'
+ * @query brand?: 'nike' | 'adidas' | 'newbalance' | 'handmade'
+ */
+router.get( '/products/bidding', checkGetProductsBidding, responseWrapper( async( req: Request, res: Response ) => {
+  const { useruuid: userUuid } = req.headers;
+  const { page, status, brand } = req.query;
+
+  const where = { ...( brand && { brand }), ...( status && { status }) };
+  const { count, products } = await ProductService.getProductsBidding({ userUuid, page: +page , where });
+
+  resSuccess( res, { count, products });
 }) );
 
 

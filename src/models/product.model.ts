@@ -22,6 +22,7 @@ class Product extends Model {
   public readonly createdAt?: Date;
   public readonly updatedAt?: Date;
   public readonly deletedAt?: Date;
+  public auctions?: Record<string, any>[];
 }
 
 type ProductStatic = typeof Model & {

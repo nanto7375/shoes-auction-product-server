@@ -24,3 +24,27 @@ export const getProductIncludingAuctions = async( productUuid ) => {
   return product;
 };
 
+export const getProductsBidding = async({ userUuid, page, where }) => {
+  const { count, products } = await ProductRepository.getProductsBiddingAndCount({ userUuid, page, where });
+
+  const modifiedProducts = products.map( product => {
+    const copiedProduct = product.toJSON();
+    copiedProduct.auctions.some( ( auction, index ) => {
+      if ( index === 0 ) {
+        copiedProduct.topBidPrice = auction.bidPrice;
+      }
+      if ( auction.userUuid === userUuid ) {
+        copiedProduct.myBidPrice = auction.bidPrice;
+        copiedProduct.myTurn = index + 1;
+        return true;
+      }
+      return false;
+    });
+
+    delete copiedProduct.auctions;
+    return copiedProduct;
+  });
+
+  return { count, products: modifiedProducts };
+};
+

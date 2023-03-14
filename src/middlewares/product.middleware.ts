@@ -9,6 +9,8 @@ const SHOES_BRAND = {
   handmade: 1,
 };
 
+const isValidPage = ( page ) => !( ( page && +page <= 0 ) || Number.isNaN( +page ) );
+
 export const validateBrand = ( req: Request, res: Response, next: NextFunction ) => {
   const brand = req.query?.brand;
 
@@ -23,6 +25,24 @@ export const validateBrand = ( req: Request, res: Response, next: NextFunction )
   }
 };
 
+export const checkGetProducts = async ( req: Request, res: Response, next: NextFunction ) => {    
+  const { page, active } = req.query;
+
+  try{
+    if ( !isValidPage( page ) ) {
+      throw new ErrorException( badData );
+    }
+    if ( !page ) {
+      req.query.page = '1';
+    }
+    if ( !active ) {
+      req.query.active = 'false';
+    }
+
+    next();
+  } catch ( error ) {
+    next( error );
+  }};
 
 export const checkProductPost = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {
   const { useruuid: userUuid } = headers;
@@ -54,3 +74,22 @@ export const checkProductPost = async ({ body, headers }: Request, res: Response
   }
 };
 
+export const checkGetProductsBidding = async ( req: Request, res: Response, next: NextFunction ) => {
+  const { page } = req.query;
+
+  try {
+    if ( !req.headers.useruuid ) {
+      throw new ErrorException( unAuthorized );
+    }
+    if ( !isValidPage( page ) ) {
+      throw new ErrorException( badData );
+    }
+    if ( !page ) {
+      req.query.page = '1';
+    }
+
+    next();
+  } catch ( error ) {
+    next( error );
+  }
+};
