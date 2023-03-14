@@ -6,7 +6,7 @@ import { resSuccess, responseWrapper } from '../utils/handler';
 import { ProductService } from '../services';
 import { productMiddleware } from '../middlewares';
 const router = Router();
-const { validateBrand, checkProductsBidding } = productMiddleware;
+const { validateBrand, checkGetProducts, checkGetProductsBidding } = productMiddleware;
 
 /**
  * @api 상품 목록 조회
@@ -14,17 +14,13 @@ const { validateBrand, checkProductsBidding } = productMiddleware;
  * @query brand?: 'nike' | 'adidas' | 'newbalance' | 'handmade'
  * @query active: 'true' | 'false'
  */
-router.get( '/products', validateBrand, responseWrapper( async ( req: Request, res: Response ) => {
+router.get( '/products', [ validateBrand, checkGetProducts ], responseWrapper( async ( req: Request, res: Response ) => {
   const { page, brand, active } = req.query;
   
-  /**
-   * parameter default value
-   * page: 1, brand: null, active: 'false' as string
-   */
   const { count, products } = await ProductService.getProductsAndCount({ 
-    page: ( page ? +page : 1 ) || 1,
+    page: +page,
     brand, 
-    active: JSON.parse( active as string || 'false' ), 
+    active: JSON.parse( active as string ), 
   });
   
   resSuccess( res, { count, products });
@@ -68,7 +64,7 @@ router.get( '/product/:productUuid', responseWrapper( async ( req: Request, res:
  * @query status?: 'SELLING'|'WAITING'|'SOLD'|'FAILED'
  * @query brand?: 'nike' | 'adidas' | 'newbalance' | 'handmade'
  */
-router.get( '/products/bidding', checkProductsBidding, responseWrapper( async( req: Request, res: Response ) => {
+router.get( '/products/bidding', checkGetProductsBidding, responseWrapper( async( req: Request, res: Response ) => {
   const { useruuid: userUuid } = req.headers;
   const { page, status, brand } = req.query;
 
