@@ -7,7 +7,7 @@ export const getLikes = async () => {
 };
 
 export const isLike = async ({ productUuid, userUuid }) => {
-  const isLike = await LikeRepository.isLike({ productUuid, userUuid });
+  const isLike = await LikeRepository.getLikeByUserAndProductId({ productUuid, userUuid });
 
   return isLike;
 };
