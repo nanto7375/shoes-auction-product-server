@@ -37,6 +37,22 @@ export const getProductIncludingAuctions = async ( productUuid ) => {
   return product;
 };
 
+export const getProductsBiddingAndCount = async ({ userUuid, page, where }) => {
+  const limit = 5;
+  const offset = ( page - 1 ) * limit;
+  const include = [
+    { model: Auction, as: 'auctions', where: { userUuid: [ userUuid ] }, required: true, group: 'auctions.productUuid' },
+  ];
+
+  const { count: counts, rows: products_which_i_bade_for  } = await Product.findAndCountAll({ where, offset, limit, include, group: 'products.uuid', order: [ [ Auction, 'createdAt', 'DESC' ] ] });
+
+  const products = await Promise.all( products_which_i_bade_for.map( product => 
+    Product.findOne({ where: { uuid: product.uuid }, include: [ { model: Auction, as: 'auctions' } ] }) 
+  ) );
+
+  return { count: counts.length, products };
+};
+
 
 
 

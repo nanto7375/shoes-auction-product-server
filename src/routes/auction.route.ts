@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 // import { Joi, Segments, celebrate } from 'celebrate';
 import ErrorException from '../exceptions/form.exception';
-import { badData, badRequest } from '../exceptions/definition.exception';
+import { badData, badRequest, unAuthorized } from '../exceptions/definition.exception';
 import { resSuccess, responseWrapper } from '../utils/handler';
 import { AuctionMiddleware } from '../middlewares';
 import { AuctionService, ProductService } from '../services';
@@ -15,7 +15,7 @@ const { checkReqAuctionPost } = AuctionMiddleware;
  * @body productUuid: string
  * @body bidPrice: number
  */
-router.post( '/auction', checkReqAuctionPost, responseWrapper( async ( req: Request, res: Response ) => {
+router.post( '/auctions', checkReqAuctionPost, responseWrapper( async ( req: Request, res: Response ) => {
   const { useruuid: userUuid } = req.headers;
   const { productUuid, bidPrice } = req.body;
 

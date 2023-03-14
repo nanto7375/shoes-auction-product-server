@@ -23,6 +23,12 @@ export const validateBrand = ( req: Request, res: Response, next: NextFunction )
   }
 };
 
+export const checkGetProducts = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {    
+  try{
+    next();
+  } catch ( error ) {
+    next( error );
+  }};
 
 export const checkProductPost = async ({ body, headers }: Request, res: Response, next: NextFunction ) => {
   const { useruuid: userUuid } = headers;
@@ -54,3 +60,22 @@ export const checkProductPost = async ({ body, headers }: Request, res: Response
   }
 };
 
+export const checkProductsBidding = async ( req: Request, res: Response, next: NextFunction ) => {
+  const { page } = req.query;
+
+  try {
+    if ( !req.headers.useruuid ) {
+      throw new ErrorException( unAuthorized );
+    }
+    if ( page && +page <= 0 ) {
+      throw new ErrorException( badData );
+    }
+    if ( !page ) {
+      req.query.page = '1';
+    }
+
+    next();
+  } catch ( error ) {
+    next( error );
+  }
+};
